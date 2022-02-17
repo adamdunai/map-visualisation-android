@@ -1,8 +1,11 @@
-package com.example.mapvisualisation
+package com.example.mapvisualisation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mapvisualisation.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -37,16 +39,24 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
+    kapt "com.google.dagger:hilt-compiler:$rootProject.daggerVersion"
+
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$rootProject.coreVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "com.google.dagger:hilt-android:$rootProject.daggerVersion"
     implementation "com.squareup.logcat:logcat:$rootProject.logcatVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
 
     ktlint "com.pinterest:ktlint:$rootProject.ktlintVersion"
 
+    testImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerVersion"
     testImplementation "junit:junit:$rootProject.jUnitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.extjUnitVersion"
