@@ -42,6 +42,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$rootProject.coreVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "com.squareup.logcat:logcat:$rootProject.logcatVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
 
     ktlint "com.pinterest:ktlint:$rootProject.ktlintVersion"
