@@ -3,7 +3,10 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
+
+apply from: 'utils.gradle'
 
 android {
     compileSdk rootProject.compileSdkVersion
@@ -16,6 +19,16 @@ android {
         versionName rootProject.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_URL", doubleQuotes("https://api.jsonbin.io/")
+        buildConfigField "int", "DATABASE_VERSION", '1'
+        buildConfigField "String", "DATABASE_NAME", doubleQuotes("default")
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
     }
 
     buildTypes {
@@ -48,15 +61,26 @@ kapt {
 }
 
 dependencies {
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "com.google.dagger:hilt-compiler:$rootProject.daggerVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
 
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$rootProject.coreVersion"
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "com.google.dagger:hilt-android:$rootProject.daggerVersion"
     implementation "com.squareup.logcat:logcat:$rootProject.logcatVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
 
     ktlint "com.pinterest:ktlint:$rootProject.ktlintVersion"
 
