@@ -37,6 +37,10 @@ android {
     configurations {
         ktlint
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 kapt {
