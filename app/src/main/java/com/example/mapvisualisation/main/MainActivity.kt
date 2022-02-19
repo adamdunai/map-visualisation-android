@@ -4,13 +4,16 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.mapvisualisation.R
 import com.example.mapvisualisation.databinding.ActivityMainBinding
 import com.example.mapvisualisation.main.model.ScooterClusterItem
+import com.example.mapvisualisation.main.model.ScooterMapUiState
 import com.example.mapvisualisation.main.viewmodel.ScooterMapViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -52,6 +55,29 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         initMap()
+
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.uiState.collectLatest { state ->
+                    when (state) {
+                        ScooterMapUiState.Error -> {
+                            activityBinding.progressBar.isVisible = false
+                            showErrorSnackbar(R.string.scooter_map_error)
+                        }
+                        ScooterMapUiState.Loading -> {
+                            activityBinding.progressBar.isVisible = true
+                        }
+                        ScooterMapUiState.NetworkError -> {
+                            activityBinding.progressBar.isVisible = false
+                            showErrorSnackbar(R.string.scooter_map_network_error)
+                        }
+                        ScooterMapUiState.Success -> {
+                            activityBinding.progressBar.isVisible = false
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun initMap() {
@@ -90,6 +116,16 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         cancellationToken = CancellationTokenSource()
+    }
+
+    private fun showErrorSnackbar(@StringRes messageResId: Int) {
+        Snackbar.make(
+            activityBinding.root,
+            messageResId,
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction(R.string.scooter_map_reload) { viewModel.fetchScooterList() }
+            .show()
     }
 
     @SuppressLint("MissingPermission")

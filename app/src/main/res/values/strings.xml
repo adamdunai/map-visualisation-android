@@ -3,4 +3,7 @@
     <string name="app_name">Map Visualisation</string>
 
     <string name="scooter_map_location_permission_denied">Location permission needs to be enabled</string>
+    <string name="scooter_map_error">Something went wrong</string>
+    <string name="scooter_map_network_error">No internet connection</string>
+    <string name="scooter_map_reload">Reload</string>
 </resources>
