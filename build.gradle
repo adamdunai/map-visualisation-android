@@ -12,6 +12,7 @@ buildscript {
         versionName = '1.0'
 
         // App dependencies
+        activityKtxVersion = '1.4.0'
         constraintLayoutVersion = '2.1.3'
         coreVersion = '1.7.0'
         coroutinesVersion = '1.5.2'
@@ -26,6 +27,9 @@ buildscript {
         ktlintVersion = '0.44.0'
         lifecycleVersion = '2.4.1'
         logcatVersion = '0.1'
+        mapsServicesVersion = '18.0.2'
+        mapsUtilsKtxVersion = '3.3.0'
+        mapsUtilsVersion = '2.2.3'
         materialVersion = '1.5.0'
         mockKVersion = '1.12.2'
         moshiVersion = '1.12.0'
