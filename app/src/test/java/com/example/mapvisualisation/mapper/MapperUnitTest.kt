@@ -1,8 +1,11 @@
 package com.example.mapvisualisation.mapper
 
 import com.example.mapvisualisation.api.model.ScooterItemResponseApiModel
+import com.example.mapvisualisation.common.mapper.toClusterItem
 import com.example.mapvisualisation.common.mapper.toDataModel
 import com.example.mapvisualisation.database.model.ScooterDataModel
+import com.example.mapvisualisation.database.tuple.ScooterMapTuple
+import com.example.mapvisualisation.main.model.ScooterClusterItem
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -33,6 +36,24 @@ class MapperUnitTest {
                 longitude = 13.289618
             ),
             apiModel.toDataModel()
+        )
+    }
+
+    @Test
+    fun scooterMapTupleMapper_isCorrect() {
+        val tuple = ScooterMapTuple(
+            id = "6348dfa0-1b20-40ed-98e9-fe9e232b6105",
+            latitude = 52.506731,
+            longitude = 13.289618
+        )
+
+        assertEquals(
+            ScooterClusterItem(
+                id = "6348dfa0-1b20-40ed-98e9-fe9e232b6105",
+                latitude = 52.506731,
+                longitude = 13.289618
+            ),
+            tuple.toClusterItem()
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.example.mapvisualisation.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -8,11 +9,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.mapvisualisation.R
 import com.example.mapvisualisation.databinding.ActivityMainBinding
 import com.example.mapvisualisation.main.model.ScooterClusterItem
+import com.example.mapvisualisation.main.viewmodel.ScooterMapViewModel
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.awaitMapLoad
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activityBinding: ActivityMainBinding
     private lateinit var clusterManager: ClusterManager<ScooterClusterItem>
+
+    private val viewModel: ScooterMapViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +50,19 @@ class MainActivity : AppCompatActivity() {
                     )
                     googleMap.setOnCameraIdleListener(clusterManager)
                 }
+
+                viewModel.scooterListFlow.collectLatest { clusterList ->
+                    addClusters(clusterList)
+                }
             }
+        }
+    }
+
+    private fun addClusters(clusterList: List<ScooterClusterItem>) {
+        clusterManager.apply {
+            clearItems()
+            addItems(clusterList)
+            cluster()
         }
     }
 }
