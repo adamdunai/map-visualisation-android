@@ -68,6 +68,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.core:core-ktx:$rootProject.coreVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$rootProject.lifecycleVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
@@ -85,7 +88,11 @@ dependencies {
     ktlint "com.pinterest:ktlint:$rootProject.ktlintVersion"
 
     testImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerVersion"
+    testImplementation "io.kotest:kotest-assertions-core:$rootProject.kotestVersion"
+    testImplementation "io.kotest:kotest-runner-junit4:$rootProject.kotestVersion"
+    testImplementation "io.mockk:mockk:$rootProject.mockKVersion"
     testImplementation "junit:junit:$rootProject.jUnitVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.extjUnitVersion"
 }

@@ -2,6 +2,7 @@ package com.example.mapvisualisation.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mapvisualisation.database.model.ScooterDataModel
 import com.example.mapvisualisation.database.tuple.ScooterDetailsTuple
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ScooterDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertScooterList(scooterList: List<ScooterDataModel>)
 
     @Query("SELECT id, latitude, longitude FROM Scooters")
