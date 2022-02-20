@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_padding_size_medium">
+
+    <ImageView
+        android:id="@+id/iconImageView"
+        android:layout_width="@dimen/scooter_info_icon_width_height"
+        android:layout_height="@dimen/scooter_info_icon_width_height"
+        android:contentDescription="@string/scooter_info_image_content_description"
+        android:src="@drawable/ic_baseline_electric_scooter_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/scooterNumberTextView"
+        style="@style/ScooterInfoScooterNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_padding_size_medium"
+        app:layout_constraintStart_toEndOf="@id/iconImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Scooter #118160" />
+
+    <TextView
+        android:id="@+id/stateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Status: ACTIVE" />
+
+    <TextView
+        android:id="@+id/batteryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:gravity="center_vertical"
+        app:drawableStartCompat="@drawable/ic_baseline_battery_charging_full_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stateTextView"
+        tools:text="95% battery" />
+
+    <TextView
+        android:id="@+id/zoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_padding_size_small"
+        android:gravity="center_vertical"
+        app:drawableStartCompat="@drawable/ic_baseline_location_city_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/batteryTextView"
+        tools:text="BERLIN" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
