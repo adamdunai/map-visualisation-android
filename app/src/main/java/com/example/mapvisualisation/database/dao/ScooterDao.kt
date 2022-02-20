@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mapvisualisation.database.model.ScooterDataModel
-import com.example.mapvisualisation.database.tuple.ScooterDetailsTuple
+import com.example.mapvisualisation.database.tuple.ScooterInfoTuple
 import com.example.mapvisualisation.database.tuple.ScooterMapTuple
 import kotlinx.coroutines.flow.Flow
 
@@ -23,5 +23,5 @@ interface ScooterDao {
             " FROM Scooters" +
             " WHERE id = :id"
     )
-    suspend fun getScooter(id: String): ScooterDetailsTuple
+    suspend fun getScooterInfo(id: String): ScooterInfoTuple
 }
