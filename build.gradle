@@ -19,6 +19,7 @@ buildscript {
         daggerVersion = '2.40.5'
         espressoVersion = '3.4.0'
         extjUnitVersion = '1.1.3'
+        fragmentKtxVersion = '1.4.1'
         gradleSecretsVersion = '2.0.1'
         gradleVersion = '7.0.4'
         jUnitVersion = '4.13.2'
