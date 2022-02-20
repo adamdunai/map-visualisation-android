@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ScooterDao {
 
+    /**
+     * Data coming from the API is static, that's why using [OnConflictStrategy.IGNORE]
+     */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertScooterList(scooterList: List<ScooterDataModel>)
 
