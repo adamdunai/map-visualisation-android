@@ -4,6 +4,7 @@ import com.example.mapvisualisation.CoroutineDispatcherRule
 import com.example.mapvisualisation.data.ScooterRepository
 import com.example.mapvisualisation.main.model.ScooterMapUiState
 import com.example.mapvisualisation.main.viewmodel.ScooterMapViewModel
+import com.example.mapvisualisation.service.LocationService
 import com.example.mapvisualisation.service.NetworkService
 import com.example.mapvisualisation.test
 import com.squareup.moshi.JsonDataException
@@ -32,12 +33,21 @@ class ScooterMapViewModelUnitTest {
     @MockK
     lateinit var networkService: NetworkService
 
+    @MockK
+    lateinit var locationService: LocationService
+
     lateinit var viewModel: ScooterMapViewModel
 
     @Before
     fun initMockKAnnotations() {
         MockKAnnotations.init(this, relaxed = true)
-        viewModel = ScooterMapViewModel(repository, networkService, UnconfinedTestDispatcher())
+
+        viewModel = ScooterMapViewModel(
+            repository = repository,
+            networkService = networkService,
+            locationService = locationService,
+            ioDispatcher = UnconfinedTestDispatcher()
+        )
     }
 
     @Test

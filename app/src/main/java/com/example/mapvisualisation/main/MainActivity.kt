@@ -1,7 +1,6 @@
 package com.example.mapvisualisation.main
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -15,14 +14,10 @@ import com.example.mapvisualisation.databinding.ActivityMainBinding
 import com.example.mapvisualisation.main.model.ScooterClusterItem
 import com.example.mapvisualisation.main.model.ScooterMapUiState
 import com.example.mapvisualisation.main.viewmodel.ScooterMapViewModel
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.ktx.awaitMap
@@ -41,8 +36,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var activityBinding: ActivityMainBinding
     private lateinit var clusterManager: ClusterManager<ScooterClusterItem>
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var cancellationToken: CancellationTokenSource
 
     private val viewModel: ScooterMapViewModel by viewModels()
 
@@ -51,8 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         activityBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityBinding.root)
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         initMap()
 
@@ -125,11 +116,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        cancellationToken = CancellationTokenSource()
-    }
-
     private fun showErrorSnackbar(@StringRes messageResId: Int) {
         Snackbar.make(
             activityBinding.root,
@@ -140,22 +126,21 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    @SuppressLint("MissingPermission")
     @NeedsPermission(
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION
     )
     fun moveCameraToCurrentLocation(map: GoogleMap) {
-        fusedLocationClient.getCurrentLocation(
-            LocationRequest.PRIORITY_HIGH_ACCURACY,
-            cancellationToken.token
-        ).addOnSuccessListener { location ->
-            map.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(location.latitude, location.longitude),
-                    MAP_CAMERA_ZOOM_LEVEL
-                )
-            )
+        lifecycleScope.launch {
+            viewModel.locationFlow
+                .collectLatest { location ->
+                    map.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(location.latitude, location.longitude),
+                            MAP_CAMERA_ZOOM_LEVEL
+                        )
+                    )
+                }
         }
     }
 
@@ -183,11 +168,6 @@ class MainActivity : AppCompatActivity() {
             R.string.scooter_map_location_permission_denied,
             Snackbar.LENGTH_LONG
         ).show()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        cancellationToken.cancel()
     }
 
     companion object {
