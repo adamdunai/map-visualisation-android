@@ -31,7 +31,7 @@ class ScooterMapViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ScooterMapUiState>(ScooterMapUiState.Loading)
-    val uiState: StateFlow<ScooterMapUiState> = _uiState
+    val uiState: StateFlow<ScooterMapUiState> get() = _uiState
 
     val scooterListFlow: Flow<List<ScooterClusterItem>> =
         repository.scooterListStream.map { list ->

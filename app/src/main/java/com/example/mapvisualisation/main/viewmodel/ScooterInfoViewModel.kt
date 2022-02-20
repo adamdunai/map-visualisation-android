@@ -22,7 +22,7 @@ class ScooterInfoViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ScooterInfoUiModel?>(null)
-    val uiState: StateFlow<ScooterInfoUiModel?> = _uiState
+    val uiState: StateFlow<ScooterInfoUiModel?> get() = _uiState
 
     init {
         getInfo()
