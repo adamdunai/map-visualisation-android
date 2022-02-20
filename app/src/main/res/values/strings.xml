@@ -6,4 +6,9 @@
     <string name="scooter_map_error">Something went wrong</string>
     <string name="scooter_map_network_error">No internet connection</string>
     <string name="scooter_map_reload">Reload</string>
+
+    <string name="scooter_info_image_content_description">scooter icon</string>
+    <string name="scooter_info_number">Scooter #%d</string>
+    <string name="scooter_info_state">State: %s</string>
+    <string name="scooter_info_battery">%d%% battery</string>
 </resources>

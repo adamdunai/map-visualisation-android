@@ -89,11 +89,7 @@ class MainActivity : AppCompatActivity() {
                 googleMap.awaitMapLoad()
 
                 if (!this@MainActivity::clusterManager.isInitialized) {
-                    clusterManager = ClusterManager<ScooterClusterItem>(
-                        this@MainActivity,
-                        googleMap
-                    )
-                    googleMap.setOnCameraIdleListener(clusterManager)
+                    initClusterManager(googleMap)
                 }
 
                 moveCameraToCurrentLocationWithPermissionCheck(googleMap)
@@ -103,6 +99,22 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun initClusterManager(googleMap: GoogleMap) {
+        clusterManager = ClusterManager<ScooterClusterItem>(
+            this@MainActivity,
+            googleMap
+        ).apply {
+            setOnClusterItemClickListener { item ->
+                ScooterInfoDialogFragment().showBottomSheet(
+                    manager = supportFragmentManager,
+                    scooterId = item.id
+                )
+                true
+            }
+        }
+        googleMap.setOnCameraIdleListener(clusterManager)
     }
 
     private fun addClusters(clusterList: List<ScooterClusterItem>) {
